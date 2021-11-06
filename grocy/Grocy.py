@@ -62,5 +62,7 @@ class Grocy(GrocyAPI):
         }
 
         response = self.session.post(self.url + '/api/stock/products/%d/add' % product, data)
-        response.raise_for_status()
+        if not response.ok:
+            data = response.json()
+            raise ValueError(data['error_message'])
         return response.json()
