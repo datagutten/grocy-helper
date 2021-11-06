@@ -33,6 +33,12 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(7, product.stock_amount)
         self.assertEqual(19.94, product.stock_unit_price)
 
+    def test_unit_price4(self):
+        product = self.grocy.get_product_obj('Eplejuice')
+        product.set_package(1, 3, 139.61/4, 4)
+        self.assertEqual(7, product.stock_amount)
+        self.assertEqual(19.94, product.stock_unit_price)
+
 
 if __name__ == '__main__':
     unittest.main()
