@@ -1,0 +1,26 @@
+name: Test unit prices
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build docker container
+        run: docker build -t grocy_test tests
+
+      - name: Start docker container
+        run: docker run -d -p 9283:80 grocy_test
+
+      - name: Wait
+        run: python3 tests/http_wait.py
+
+      - run: curl http://localhost:9283
+
+      - name: Run tests
+        run: python3 -m unittest tests/TestProductUnitConversion.py
