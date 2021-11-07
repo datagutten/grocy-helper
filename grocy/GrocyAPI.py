@@ -9,6 +9,9 @@ class GrocyAPI:
         self.api_key = api_key
         self.session.verify = False
 
+    def __del__(self):
+        self.session.close()
+
     def get(self, url):
         if url[0] == '/':
             url = self.url + url
