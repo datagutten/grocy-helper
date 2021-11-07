@@ -61,6 +61,10 @@ class TestProduct(unittest.TestCase):
         unit = self.grocy.conversion.get_quantity('pakke')
         self.assertEqual(3, unit['id'])
 
+    def test_get_invalid_quantity_unit(self):
+        with self.assertRaises(exceptions.InvalidUnitException, msg='Unknown unit: kilogram'):
+            self.grocy.conversion.get_quantity('kilogram')
+
     def test_get_quantity_dict_abbreviation(self):
         values = self.grocy.conversion.get_quantity_dict()
         self.assertIn('l', values.keys())
