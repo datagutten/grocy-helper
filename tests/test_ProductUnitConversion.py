@@ -46,6 +46,11 @@ class TestProduct(unittest.TestCase):
         self.assertEqual(7, product.stock_amount)
         self.assertEqual(19.94, product.stock_unit_price)
 
+    def test_invalid_conversion(self):
+        product = self.grocy.get_product_obj('Eplejuice')
+        with self.assertRaises(exceptions.MissingConversionException, msg='No conversion found for product 1 from 5 to 4'):
+            product.set_package(1, 5, 139.61/4, 4)
+
 
 if __name__ == '__main__':
     unittest.main()
