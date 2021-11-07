@@ -1,6 +1,6 @@
 import unittest
 
-from grocy import Grocy
+from grocy import Grocy, exceptions
 
 
 class TestProduct(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestProduct(unittest.TestCase):
 
     def test_unit_price2(self):
         product = self.grocy.get_product_obj('Maxboller')
-        with self.assertRaises(ValueError, msg='No conversion found for product 10 from 5 to 2'):
+        with self.assertRaises(exceptions.MissingConversionException, msg='No conversion found for product 10 from 5 to 2'):
             product.set_package(420, 5, 59.40, 1)
 
         # self.assertEqual(1, product.stock_amount)
