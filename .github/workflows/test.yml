@@ -20,7 +20,8 @@ jobs:
       - name: Wait
         run: python3 tests/http_wait.py
 
-      - run: curl http://localhost:9283
-
       - name: Run tests
-        run: python3 -m unittest tests/TestProductUnitConversion.py
+        run: coverage run -m unittest tests/TestProductUnitConversion.py
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
