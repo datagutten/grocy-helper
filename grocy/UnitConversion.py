@@ -1,4 +1,5 @@
 from grocy.GrocyAPI import GrocyAPI
+from grocy import exceptions
 
 
 class UnitConversion(GrocyAPI):
@@ -22,6 +23,12 @@ class UnitConversion(GrocyAPI):
 
         return units
 
+    def get_quantity(self, name):
+        for key, unit in self.quantities.items():
+            if key == name:
+                return unit
+        raise exceptions.InvalidUnitException('Unknown unit: %s' % name)
+
     def get_conversion(self, product: int, unit_from: int, unit_to: int):
         assert isinstance(product, int), 'Product id is not int'
         assert isinstance(unit_from, int)
@@ -39,7 +46,7 @@ class UnitConversion(GrocyAPI):
                     reverse = True
 
             return float(conversion['factor']), reverse
-        raise ValueError(
+        raise exceptions.MissingConversionException(
             'No conversion found for product %d from %s to %s' % (product, unit_from, unit_to))
 
     def convert(self, product_id: int, unit_from: int, unit_to: int, value):
