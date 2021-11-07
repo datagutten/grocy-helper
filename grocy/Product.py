@@ -15,6 +15,14 @@ class Product:
     Price for one stock unit
     """
 
+    purchase_unit: int
+    """
+    Default purchase unit
+    """
+
+    purchase_unit_factor: float
+    """Factor to convert purchased amount to stock amount"""
+
     def __init__(self, grocy_api: Grocy, product=None):
         self.api = grocy_api
         if product:
@@ -38,6 +46,11 @@ class Product:
             # Purchased unit is the same as stock, no conversion required
             self.stock_amount = round(pieces, 2)
             self.stock_unit_price = round(piece_price, 2)
+
+    def set_default_package(self, package_price, num_packages=1):
+        self.stock_amount = round(self.purchase_unit_factor * num_packages, 2)
+        self.stock_unit_price = (package_price * num_packages) / self.stock_amount
+        self.stock_unit_price = round(self.stock_unit_price, 2)
 
     def set_total_price(self, total):
         self.stock_unit_price = total / self.stock_amount

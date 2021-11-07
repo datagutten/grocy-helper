@@ -27,6 +27,13 @@ class TestProduct(unittest.TestCase):
         # self.assertEqual(1, product.stock_amount)
         # self.assertEqual(59.40, product.stock_unit_price)
 
+    def test_default_conversion(self):
+        product = self.grocy.get_product_obj('Lefsegodt')
+        product.set_default_package(18.40, 1)
+
+        self.assertEqual(6, product.stock_amount)
+        self.assertEqual(3.07, product.stock_unit_price)
+
     def test_unit_price3(self):
         product = self.grocy.get_product_obj('Eplejuice')
         product.set_package(1.75, 4, 34.90, 4)
