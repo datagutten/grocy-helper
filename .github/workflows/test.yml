@@ -29,7 +29,8 @@ jobs:
       - name: Run tests
         run: coverage run -m unittest
 
+      - name: Convert coverage
+        run: coverage xml
+
       - name: Upload coverage
         uses: codecov/codecov-action@v2
-        with:
-          files: './.coverage'
