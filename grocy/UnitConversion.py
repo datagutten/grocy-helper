@@ -11,6 +11,7 @@ class UnitConversion(GrocyAPI):
         data = self.get(self.url + '/api/objects/quantity_units')
         units = {}
         for unit in data:
+            unit['id'] = int(unit['id'])
             if key_field in unit['userfields'] and unit['userfields'][key_field]:
                 key = unit['userfields'][key_field]
             elif key_field in unit and unit[key_field]:
@@ -22,6 +23,10 @@ class UnitConversion(GrocyAPI):
         return units
 
     def get_conversion(self, product: int, unit_from: int, unit_to: int):
+        assert isinstance(product, int), 'Product id is not int'
+        assert isinstance(unit_from, int)
+        assert isinstance(unit_to, int)
+
         data = self.get(self.url + '/api/objects/quantity_unit_conversions')
         reverse = False
         for conversion in data:
