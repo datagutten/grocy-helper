@@ -35,6 +35,7 @@ class Product:
             self.stock_unit_price = (package_price * num_packages) / self.stock_amount
             self.stock_unit_price = round(self.stock_unit_price, 2)
         else:
+            # Purchased unit is the same as stock, no conversion required
             self.stock_amount = round(pieces, 2)
             self.stock_unit_price = round(piece_price, 2)
 
@@ -44,8 +45,8 @@ class Product:
     def set_unit_price(self, price):
         self.stock_unit_price = price
 
-    def set_amount(self, amount, unit):
-        if unit != self.stock_unit:
+    def set_amount(self, amount, unit=None):
+        if unit and unit != self.stock_unit:
             raise ValueError('Conversion needed')
         else:
             self.stock_amount = amount
