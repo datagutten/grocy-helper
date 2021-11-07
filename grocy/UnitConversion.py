@@ -5,10 +5,9 @@ from grocy import exceptions
 class UnitConversion(GrocyAPI):
     def __init__(self, url, api_key):
         super().__init__(url, api_key)
-        self.quantities = self._get_quantities()
-        self.quantities_id = self._get_quantities('id')
+        self.quantities = self.get('/api/objects/quantity_units')
 
-    def _get_quantities(self, key_field='abbreviation'):
+    def get_quantity_dict(self, key_field='abbreviation'):
         data = self.get(self.url + '/api/objects/quantity_units')
         units = {}
         for unit in data:
@@ -24,9 +23,15 @@ class UnitConversion(GrocyAPI):
         return units
 
     def get_quantity(self, name):
-        for key, unit in self.quantities.items():
-            if key == name:
-                return unit
+        for unit in self.quantities:
+            unit['id'] = int(unit['id'])
+            for value in unit.values():
+                if value == name:
+                    return unit
+            for value in unit['userfields'].values():
+                if value == name:
+                    return unit
+
         raise exceptions.InvalidUnitException('Unknown unit: %s' % name)
 
     def get_conversion(self, product: int, unit_from: int, unit_to: int):

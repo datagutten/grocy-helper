@@ -51,6 +51,28 @@ class TestProduct(unittest.TestCase):
         with self.assertRaises(exceptions.MissingConversionException, msg='No conversion found for product 1 from 5 to 4'):
             product.set_package(1, 5, 139.61/4, 4)
 
+    def test_get_quantity_unit(self):
+        unit = self.grocy.conversion.get_quantity('l')
+        self.assertEqual('liter', unit['name'])
+
+        unit = self.grocy.conversion.get_quantity('stk')
+        self.assertEqual('stk', unit['name'])
+
+        unit = self.grocy.conversion.get_quantity('pakke')
+        self.assertEqual(3, unit['id'])
+
+    def test_get_quantity_dict_abbreviation(self):
+        values = self.grocy.conversion.get_quantity_dict()
+        self.assertIn('l', values.keys())
+
+    def test_get_quantity_dict_name_plural(self):
+        values = self.grocy.conversion.get_quantity_dict('name_plural')
+        self.assertIn('gram', list(values.keys()))
+
+    def test_get_quantity_dict_name(self):
+        values = self.grocy.conversion.get_quantity_dict(None)
+        self.assertIn('liter', list(values.keys()))
+
 
 if __name__ == '__main__':
     unittest.main()
