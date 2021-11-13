@@ -7,7 +7,7 @@ from suppliers import OdaWeb
 
 class TestOdaWeb(unittest.TestCase):
     def setUp(self) -> None:
-        with open('../grocy_test_data/Bestilling evndg9 - Oda.html') as fp:
+        with open('test_data/Bestilling evndg9 - Oda.html') as fp:
             html = fp.read()
         oda = OdaWeb(html)
         self.order = oda.get_order()

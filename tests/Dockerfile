@@ -3,4 +3,4 @@ RUN pwd
 
 EXPOSE 80
 
-ADD grocy.db /config/data/grocy.db
+ADD test_data/grocy.db /config/data/grocy.db
