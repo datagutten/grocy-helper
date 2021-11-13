@@ -23,6 +23,7 @@ def get_amount(text):
 class OdaWeb:
     def __init__(self, html):
         self.data = lxml.html.fromstring(html)
+        self.order = self.get_order()
 
     def get_order(self) -> Order:
         date = self.parse_date()
@@ -46,7 +47,6 @@ class OdaWeb:
         return delivery_date
 
     def parse_order_lines(self):
-        products = []
         lines = self.data.findall('.//tr[@class="order-line "]')
         for line in lines:
             description = line.find('.//div[@class="product-description"]/.').text.strip()
@@ -61,5 +61,5 @@ class OdaWeb:
                                  package_unit=package_unit
                                  )
 
-            products.append(line_obj)
-        return products
+            self.order.add_line(line_obj)
+        return self.order.lines

@@ -11,8 +11,8 @@ class TestOdaWeb(unittest.TestCase):
         folder = os.path.dirname(__file__)
         with open(os.path.join(folder, 'test_data', 'Bestilling evndg9 - Oda.html')) as fp:
             html = fp.read()
-        oda = OdaWeb(html)
-        self.order = oda.get_order()
+        self.oda = OdaWeb(html)
+        self.order = self.oda.order
 
     def test_parse_order(self):
         self.assertEqual('evndg9', self.order.identifier)
