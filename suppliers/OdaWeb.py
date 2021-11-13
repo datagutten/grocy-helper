@@ -21,17 +21,18 @@ def get_amount(text):
 
 
 class OdaWeb:
+    order: Order
+
     def __init__(self, html):
         self.data = lxml.html.fromstring(html)
-        self.order = self.get_order()
+        self.get_order()
+        self.parse_order_lines()
 
     def get_order(self) -> Order:
         date = self.parse_date()
         identifier = self.get_table_cell('Bestilling')
-        order = Order(date=date.date(), identifier=identifier)
-        order.lines = self.parse_order_lines()
-
-        return order
+        self.order = Order(date=date.date(), identifier=identifier)
+        return self.order
 
     def get_table_cell(self, header):
         element = self.data.find('.//th[.="%s"]/../td' % header)
