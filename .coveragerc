@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = grocy
+source = grocy,shopping,suppliers
 
 [report]
 exclude_lines =
