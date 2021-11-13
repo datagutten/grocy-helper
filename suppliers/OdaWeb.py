@@ -15,6 +15,9 @@ def get_amount(text):
     matches = re.match(r'(.+)\s([0-9,]+)\s(g|stk|[md]?l)', text)
     if matches:
         product_name = re.sub(r'\s[0-9]+ x [0-9,]+.+', '', matches.group(1))
+        if product_name[-1] == ',':
+            product_name = product_name[:-1]
+
         return product_name, get_float(matches.group(2)), matches.group(3)
     else:
         return text, None, None

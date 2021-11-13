@@ -41,3 +41,4 @@ class TestOdaWeb(unittest.TestCase):
         self.assertEqual(67.90, line.total)
         self.assertEqual('stk', line.package_unit)
         self.assertEqual(16, line.package_size)
+        self.assertEqual('OMO Ultra Trippel Dose', line.name)
