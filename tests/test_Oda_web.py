@@ -1,4 +1,5 @@
 import datetime
+import os
 import unittest
 
 import shopping
@@ -7,7 +8,8 @@ from suppliers import OdaWeb
 
 class TestOdaWeb(unittest.TestCase):
     def setUp(self) -> None:
-        with open('test_data/Bestilling evndg9 - Oda.html') as fp:
+        folder = os.path.dirname(__file__)
+        with open(os.path.join(folder, 'test_data', 'Bestilling evndg9 - Oda.html')) as fp:
             html = fp.read()
         oda = OdaWeb(html)
         self.order = oda.get_order()
