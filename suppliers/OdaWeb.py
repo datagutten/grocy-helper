@@ -51,7 +51,8 @@ class OdaWeb:
         return delivery_date
 
     def parse_order_lines(self):
-        lines = self.data.findall('.//tr[@class="order-line "]')
+        table = self.data.find('.//table[@class="table ws-xs"]')
+        lines = table.findall('.//tr[@class="order-line "]')
         for line in lines:
             description = line.find('.//div[@class="product-description"]/.').text.strip()
             fields = line.findall('.//td[@class="text-right"]')
@@ -59,8 +60,8 @@ class OdaWeb:
 
             line_obj = OrderLine(name=name,
                                  amount=get_float(fields[0].text),
-                                 total=get_float(fields[2].text),
-                                 tax=get_float(fields[1].text.strip()[:-1]),
+                                 total=get_float(fields[1].text),
+                                 # tax=get_float(fields[1].text.strip()[:-1]),
                                  package_size=package_size,
                                  package_unit=package_unit
                                  )
