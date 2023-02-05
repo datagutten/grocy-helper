@@ -12,13 +12,13 @@ def get_float(text):
 
 def get_amount(text):
     text = text.replace('vask', 'stk')
-    matches = re.match(r'(.+)\s([0-9,]+)\s(g|stk|[md]?l)', text)
+    matches = re.match(r'(.+)\s([0-9,]+)\s(k?g|stk|[md]?l|pk)', text)
     if matches:
         product_name = re.sub(r'\s[0-9]+ x [0-9,]+.+', '', matches.group(1))
         if product_name[-1] == ',':
             product_name = product_name[:-1]
-
-        return product_name, get_float(matches.group(2)), matches.group(3)
+        unit = matches.group(3).replace('pk', 'stk')
+        return product_name, get_float(matches.group(2)), unit
     else:
         return text, None, None
 
